@@ -6,36 +6,40 @@ using System.Threading.Tasks;
 
 namespace DrinksManagement
 {
-    class UserInput : IUserInput
+    public class UserInput
     {
-        public bool CheckUserInput(string userInput, List<string> availableOptions)
+        public static bool CheckUserInputChoice(string userInput, List<List<object>> availableOptions)
         {
             string unFormatUserInput = RipStringOfFormatting(userInput);
-            foreach (string option in availableOptions)
+            foreach (List<object> list in availableOptions)
             {
-                string unFormatOption = RipStringOfFormatting(option);
-                if (unFormatOption == unFormatUserInput)
+                foreach (string option in list)
                 {
-                    return true;
+                    string unFormatOption = RipStringOfFormatting(option);
+                    if (unFormatOption == unFormatUserInput)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
-        public bool TryGetUserInputString(out string userInput, int numAllowedAttempts = 5)
+        public static bool TryGetUserChoice(out string userInput, List<List<object>> availableOptions, int numAllowedAttempts = 5 )
         {
             int totalAttempts = 0;
+            bool trueOptionChosen;
             do
             {
+                Console.WriteLine("Input choice: ");
                 userInput = Console.ReadLine();
+                trueOptionChosen = CheckUserInputChoice(userInput, availableOptions);
+                if (trueOptionChosen) { return true; };
                 totalAttempts++;
-            } while(totalAttempts <= numAllowedAttempts);
-
-            
-
-            throw new NotImplementedException();
+            } while(totalAttempts < numAllowedAttempts && !trueOptionChosen);
+            return false;
         }
-        private string RipStringOfFormatting(string s)
+        private static string RipStringOfFormatting(string s)
         {
             s = s.Replace(" ", "");
             s = s.ToLower();

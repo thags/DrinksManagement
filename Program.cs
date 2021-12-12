@@ -20,6 +20,9 @@ namespace DrinksManagement
                 MenuItems = categorieList
             };
             TableVisualisationEngine.ViewMenu(categoriesMenu);
+            bool inputSuccess = UserInput.TryGetUserChoice(out string userInput, categorieList);
+
+            Console.WriteLine(inputSuccess);
         }
     }
 }
