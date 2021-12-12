@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DrinksManagement": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Tyler\\OneDrive\\Documents\\Code\\CappuccinoCodes\\DrinksManagement"
+    }
+  }
+}
