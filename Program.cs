@@ -14,7 +14,12 @@ namespace DrinksManagement
             TableVisualisationEngine.ViewMenu(categoryMenu);
             bool inputSuccess = UserInput.TryGetUserChoice(out string userInput, categoryMenu.MenuItems);
 
-            Console.WriteLine(inputSuccess);
+            if (inputSuccess)
+            {
+                var drinksList = await APIController.GetDrinksByCategory(userInput);
+                var drinkListDto = MenuController.ConvertDrinkListToNamesMenu(drinksList);
+                TableVisualisationEngine.ViewDrinksList(drinkListDto, userInput);
+            }
 
             
         }

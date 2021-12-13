@@ -1,4 +1,5 @@
 ﻿using DrinksManagement.Models;
+using DrinksManagement.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,21 @@ namespace DrinksManagement
                 MenuItems = convertCategorieList
             };
             return categoriesMenu;
+        }
+
+        public static DrinkListDTO ConvertDrinkListToNamesMenu(DrinkListModel drinkList)
+        {
+            var justDrinkNamesList = new List<List<object>> ();
+            foreach(DrinkModel drink in drinkList.drinks)
+            {
+                justDrinkNamesList.Add(new List<object> { drink.strDrink });
+            }
+            DrinkListDTO drinkListMenu = new DrinkListDTO
+            {
+                DrinkNameList = justDrinkNamesList
+            };
+
+            return drinkListMenu;
         }
     }
 }

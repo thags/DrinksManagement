@@ -31,6 +31,21 @@ namespace DrinksManagement
             var categorieList = await JsonSerializer.DeserializeAsync<CategoryListModel>(await streamTask, options);
             return categorieList;
         }
+        public static async Task<DrinkListModel> GetDrinksByCategory(string categoryName)
+        {
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string ApiUrl = APIURL + $"search.php?s={categoryName}";
+            var streamTask = client.GetStreamAsync(ApiUrl);
+
+
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new JsonStringEnumConverter());
+            var categorieList = await JsonSerializer.DeserializeAsync<DrinkListModel>(await streamTask, options);
+            return categorieList;
+        }
 
     }
 }
