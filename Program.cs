@@ -9,23 +9,14 @@ namespace DrinksManagement
     {
         static async Task Main(string[] args)
         {
-            List<List<object>> categorieList = new List<List<object>>
-            {
-                new List<object>{"Alcoholic"},
-                new List<object>{"Non-Alcoholic"},
-                new List<object>{"Soda"},
-            };
-            MenuModel categoriesMenu = new MenuModel
-            {
-                MenuTitle = "Categories",
-                MenuItems = categorieList
-            };
-            TableVisualisationEngine.ViewMenu(categoriesMenu);
-            bool inputSuccess = UserInput.TryGetUserChoice(out string userInput, categorieList);
+            var categoryList = await APIController.GetDrinkCategories();
+            var categoryMenu = MenuController.ConvertCategoryListToMenuModel(categoryList);
+            TableVisualisationEngine.ViewMenu(categoryMenu);
+            bool inputSuccess = UserInput.TryGetUserChoice(out string userInput, categoryMenu.MenuItems);
 
             Console.WriteLine(inputSuccess);
 
-            await APIController.GetDrinkCategories();
+            
         }
     }
 }

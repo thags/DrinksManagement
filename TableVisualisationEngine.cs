@@ -28,7 +28,6 @@ namespace DrinksManagement
                .ExportAndWriteLine(TableAligntment.Center);
             }
             Console.Write("\n");
-
         }
     }
 }
