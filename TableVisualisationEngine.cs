@@ -73,6 +73,13 @@ namespace DrinksManagement
                .From(new List<List<object>> { new List<object>{ "Instructions" } })
                .AddRow(drink.Instructions)
                .WithFormat(ConsoleTableBuilderFormat.Alternative)
+               .WithMinLength(new Dictionary<int, int> {
+                    { 1, 25 },
+                })
+                .WithTextAlignment(new Dictionary<int, TextAligntment>
+                {
+                    {1, TextAligntment.Center },
+                })
                .ExportAndWriteLine(TableAligntment.Center);
             }
             Console.Write("\n");
