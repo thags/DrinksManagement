@@ -16,7 +16,7 @@ namespace DrinksManagement
                 foreach (string option in list)
                 {
                     string unFormatOption = RipStringOfFormatting(option);
-                    if (unFormatOption == unFormatUserInput)
+                    if (unFormatOption == unFormatUserInput || unFormatUserInput == "0")
                     {
                         return true;
                     }
@@ -31,7 +31,8 @@ namespace DrinksManagement
             bool trueOptionChosen;
             do
             {
-                Console.WriteLine("Input choice: ");
+                Console.WriteLine("\nInput choice: ");
+                Console.WriteLine("0 to exit");
                 userInput = Console.ReadLine();
                 trueOptionChosen = CheckUserInputChoice(userInput, availableOptions);
                 if (trueOptionChosen) { return true; };
