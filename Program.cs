@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DrinksManagement.Models;
 
 namespace DrinksManagement
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             List<List<object>> categorieList = new List<List<object>>
             {
@@ -23,6 +24,8 @@ namespace DrinksManagement
             bool inputSuccess = UserInput.TryGetUserChoice(out string userInput, categorieList);
 
             Console.WriteLine(inputSuccess);
+
+            await APIController.GetDrinkCategories();
         }
     }
 }
