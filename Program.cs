@@ -28,14 +28,14 @@ namespace DrinksManagement
                     var drinkListDto = MenuController.ConvertDrinkListToNamesMenu(drinksList);
                     TableVisualisationEngine.ViewDrinksList(drinkListDto, userInputCategory.ToUpper());
                     bool inputIsADrink = UserInput.TryGetUserChoice(out string userInputDrinkName, drinkListDto.DrinkNameList);
-                    Console.WriteLine(inputIsADrink);
-                    Console.WriteLine($"User Chose {userInputDrinkName}");
-                    var chosenDrink = await APIController.GetDrinkInfoByName(userInputDrinkName);
-                    var chosenDrinkDTO = MenuController.ConvertDrinkModelToDisplay(chosenDrink);
-                    TableVisualisationEngine.ViewDrinkInfo(chosenDrinkDTO);
-                    Console.WriteLine("Input any key to continue");
-                    Console.ReadKey();
-
+                    if (inputIsADrink)
+                    {
+                        var chosenDrink = await APIController.GetDrinkInfoByName(userInputDrinkName);
+                        var chosenDrinkDTO = MenuController.ConvertDrinkModelToDisplay(chosenDrink);
+                        TableVisualisationEngine.ViewDrinkInfo(chosenDrinkDTO);
+                        Console.WriteLine("Input any key to continue");
+                        Console.ReadKey();
+                    }
                 }
             } while (!exit);
 
