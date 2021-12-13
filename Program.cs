@@ -36,6 +36,8 @@ namespace DrinksManagement
                     var chosenDrinkDTO = MenuController.ConvertDrinkModelToDisplay(chosenDrink);
                     //send the drink to the console to view by user
                     TableVisualisationEngine.ViewDrinkInfo(chosenDrinkDTO);
+                    Console.WriteLine("Input any key to continue");
+                    Console.ReadKey();
 
                 }
             } while (!exit);

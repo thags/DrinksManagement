@@ -22,6 +22,7 @@ namespace DrinksManagement
             }
             else
             {
+                Console.Clear();
                 ConsoleTableBuilder
                .From(tableData)
                .WithTitle(title)
@@ -41,6 +42,7 @@ namespace DrinksManagement
             }
             else
             {
+                Console.Clear();
                 ConsoleTableBuilder
                .From(tableData)
                .WithTitle(categoryName)
@@ -59,10 +61,16 @@ namespace DrinksManagement
             }
             else
             {
+                Console.Clear();
                 ConsoleTableBuilder
                .From(tableData)
                .WithTitle(drink.DrinkName)
                .WithColumn(new List<string> { "Ingredients", "Measurements" })
+               .WithFormat(ConsoleTableBuilderFormat.Alternative)
+               .ExportAndWriteLine(TableAligntment.Center);
+
+                ConsoleTableBuilder
+               .From(new List<List<object>> { new List<object>{ "Instructions" } })
                .AddRow(drink.Instructions)
                .WithFormat(ConsoleTableBuilderFormat.Alternative)
                .ExportAndWriteLine(TableAligntment.Center);
