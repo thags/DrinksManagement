@@ -15,20 +15,25 @@ namespace DrinksManagement
                 var categoryList = await APIController.GetDrinkCategories();
                 var categoryMenu = MenuController.ConvertCategoryListToMenuModel(categoryList);
                 TableVisualisationEngine.ViewMenu(categoryMenu);
-                bool inputSuccess = UserInput.TryGetUserChoice(out string userInput, categoryMenu.MenuItems);
-                if (userInput == "0")
+                bool inputIsACategory = UserInput.TryGetUserChoice(out string userInputCategory, categoryMenu.MenuItems);
+                if (userInputCategory == "0")
                 {
                     exit = true;
                     break;
                 }
 
-                if (inputSuccess)
+                if (inputIsACategory)
                 {
-                    var drinksList = await APIController.GetDrinksByCategory(userInput);
+                    var drinksList = await APIController.GetDrinksByCategory(userInputCategory);
                     var drinkListDto = MenuController.ConvertDrinkListToNamesMenu(drinksList);
-                    TableVisualisationEngine.ViewDrinksList(drinkListDto, userInput);
-                    Console.WriteLine("Press any key to continue");
-                    Console.ReadLine();
+                    TableVisualisationEngine.ViewDrinksList(drinkListDto, userInputCategory.ToUpper());
+                    bool inputIsADrink = UserInput.TryGetUserChoice(out string userInputDrinkName, drinkListDto.DrinkNameList);
+                    Console.WriteLine(inputIsADrink);
+                    Console.WriteLine($"User Chose {userInputDrinkName}");
+                    //Take drinkList and get the Drink that the user choice
+                    //format the data of that drink so the ingredients can be shown on the table
+                    //send the drinks to the table
+
                 }
             } while (!exit);
 
