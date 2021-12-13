@@ -49,5 +49,25 @@ namespace DrinksManagement
             }
             Console.Write("\n");
         }
+        public static void ViewDrinkInfo(DrinkInfoDTO drink)
+        {
+            var tableData = drink.DrinkIngredients;
+
+            if (tableData.Count == 0)
+            {
+                Console.WriteLine("Currently empty!");
+            }
+            else
+            {
+                ConsoleTableBuilder
+               .From(tableData)
+               .WithTitle(drink.DrinkName)
+               .WithColumn(new List<string> { "Ingredients", "Measurements" })
+               .AddRow(drink.Instructions)
+               .WithFormat(ConsoleTableBuilderFormat.Alternative)
+               .ExportAndWriteLine(TableAligntment.Center);
+            }
+            Console.Write("\n");
+        }
     }
 }

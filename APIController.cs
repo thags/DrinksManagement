@@ -46,6 +46,22 @@ namespace DrinksManagement
             var categorieList = await JsonSerializer.DeserializeAsync<DrinkListModel>(await streamTask, options);
             return categorieList;
         }
+        public static async Task<DrinkModel> GetDrinkInfoByName(string drinkName)
+        {
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue("application/json"));
+
+            string ApiUrl = APIURL + $"search.php?s={drinkName}";
+            var streamTask = client.GetStreamAsync(ApiUrl);
+
+
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new JsonStringEnumConverter());
+            var drinkList = await JsonSerializer.DeserializeAsync<DrinkListModel>(await streamTask, options);
+            var chosenDrink = drinkList.drinks[0];
+            return chosenDrink;
+        }
 
     }
 }

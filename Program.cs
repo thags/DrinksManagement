@@ -31,8 +31,11 @@ namespace DrinksManagement
                     Console.WriteLine(inputIsADrink);
                     Console.WriteLine($"User Chose {userInputDrinkName}");
                     //Take drinkList and get the Drink that the user choice
+                    var chosenDrink = await APIController.GetDrinkInfoByName(userInputDrinkName);
                     //format the data of that drink so the ingredients can be shown on the table
-                    //send the drinks to the table
+                    var chosenDrinkDTO = MenuController.ConvertDrinkModelToDisplay(chosenDrink);
+                    //send the drink to the console to view by user
+                    TableVisualisationEngine.ViewDrinkInfo(chosenDrinkDTO);
 
                 }
             } while (!exit);
