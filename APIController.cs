@@ -37,7 +37,7 @@ namespace DrinksManagement
             client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
 
-            string ApiUrl = APIURL + $"search.php?s={categoryName}";
+            string ApiUrl = APIURL + $"filter.php?c={categoryName}";
             var streamTask = client.GetStreamAsync(ApiUrl);
 
 
