@@ -8,19 +8,22 @@ using System.Net.Http.Headers;
 using DrinksManagement.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Configuration;
 
 namespace DrinksManagement
 {
     class APIController
     {
         private static readonly HttpClient client = new HttpClient();
+        private static readonly string APIURL = ConfigurationManager.AppSettings.Get("ApiBaseURL");
         public static async Task<CategoryListModel> GetDrinkCategories()
         {
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
             new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var streamTask = client.GetStreamAsync("https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list");
+            string ApiUrl = APIURL + "list.php?c=list";
+            var streamTask = client.GetStreamAsync(ApiUrl);
 
 
             var options = new JsonSerializerOptions();
