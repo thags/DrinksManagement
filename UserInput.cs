@@ -8,7 +8,7 @@ namespace DrinksManagement
 {
     public class UserInput
     {
-        public static bool CheckUserInputChoice(string userInput, List<List<object>> availableOptions)
+        public static bool CheckUserInputChoice(string userInput, List<List<object>> availableOptions, out string choice)
         {
             string unFormatUserInput = RipStringOfFormatting(userInput);
             foreach (List<object> list in availableOptions)
@@ -16,12 +16,14 @@ namespace DrinksManagement
                 foreach (string option in list)
                 {
                     string unFormatOption = RipStringOfFormatting(option);
-                    if (unFormatOption == unFormatUserInput || unFormatUserInput == "0")
+                    if (unFormatOption == unFormatUserInput)
                     {
+                        choice = option;
                         return true;
                     }
                 }
             }
+            choice = "Invalid Input";
             return false;
         }
 
@@ -34,9 +36,16 @@ namespace DrinksManagement
                 Console.WriteLine("\nInput choice: ");
                 Console.WriteLine("0 to exit");
                 userInput = Console.ReadLine();
-                trueOptionChosen = CheckUserInputChoice(userInput, availableOptions);
-                if (trueOptionChosen) { return true; };
-                totalAttempts++;
+                if (userInput == "0") 
+                {
+                    return false;
+                }
+                else
+                {
+                    trueOptionChosen = CheckUserInputChoice(userInput, availableOptions, out userInput);
+                    if (trueOptionChosen) { return true; };
+                    totalAttempts++;
+                }
             } while(totalAttempts < numAllowedAttempts && !trueOptionChosen);
             return false;
         }

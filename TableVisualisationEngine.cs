@@ -70,8 +70,9 @@ namespace DrinksManagement
                .ExportAndWriteLine(TableAligntment.Center);
 
                 ConsoleTableBuilder
-               .From(new List<List<object>> { new List<object>{ "Instructions" } })
+               .From(new List<List<object>> {})
                .AddRow(drink.Instructions)
+               .WithTitle("Instructions")
                .WithFormat(ConsoleTableBuilderFormat.Alternative)
                .WithMinLength(new Dictionary<int, int> {
                     { 1, 25 },
