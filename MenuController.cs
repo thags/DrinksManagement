@@ -42,6 +42,8 @@ namespace DrinksManagement
 
         public static DrinkInfoDTO ConvertDrinkModelToDisplay(DrinkModel drink)
         {
+            var instructionsList = new List<List<object>>();
+            var allIngredientList = new List<List<object>>();
             var allIngredientListBeforeNullCheck = new List<List<object>>
             {
                 new List<object> {drink.strIngredient1, drink.strMeasure1},
@@ -60,7 +62,7 @@ namespace DrinksManagement
                 new List<object> {drink.strIngredient14, drink.strMeasure14},
                 new List<object> {drink.strIngredient15, drink.strMeasure15},
             };
-            var allIngredientList = new List<List<object>>();
+       
             foreach(List<object> pair in allIngredientListBeforeNullCheck)
             {
                 if(pair[1] != null && pair[0] != null)
@@ -68,11 +70,21 @@ namespace DrinksManagement
                     allIngredientList.Add(pair);
                 }
             }
+
+            foreach(string instruction in drink.strInstructions.Split(". "))
+            {
+                if (instruction.Length > 0)
+                {
+                    string instructionToAdd = $"{instruction}.";
+                    instructionsList.Add(new List<object> { instructionToAdd });
+                }
+                
+            }
             return new DrinkInfoDTO
             {
                 DrinkIngredients = allIngredientList,
                 DrinkName = drink.strDrink,
-                Instructions = drink.strInstructions
+                Instructions = instructionsList
             };
         }
     }

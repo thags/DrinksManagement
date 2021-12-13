@@ -9,7 +9,7 @@ namespace DrinksManagement.Models.DTO
     class DrinkInfoDTO
     {
         public string DrinkName { get; set; }
-        public string Instructions { get; set; }
+        public List<List<object>> Instructions { get; set; }
         public List<List<object>> DrinkIngredients { get; set; }
     }
 }
