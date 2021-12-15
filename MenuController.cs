@@ -10,6 +10,42 @@ namespace DrinksManagement
 {
     class MenuController
     {
+        public static async Task ShowDrinkInstructionsToUserAsync(string drinkName)
+        {
+            var chosenDrink = await APIController.GetDrinkInfoByName(drinkName);
+            var chosenDrinkDTO = MenuController.ConvertDrinkModelToDisplay(chosenDrink);
+            TableVisualisationEngine.ViewDrinkInfo(chosenDrinkDTO);
+        }
+        public static async Task<UserInputModel> ShowDrinksByCategoryMenuGetUserInputAsync(string category)
+        {
+            var drinksList = await APIController.GetDrinksByCategory(category);
+            var drinkListDto = MenuController.ConvertDrinkListToNamesMenu(drinksList);
+            TableVisualisationEngine.ViewDrinksList(drinkListDto, category.ToUpper());
+            bool inputIsADrink = UserInput.TryGetUserChoice(out string userInputDrinkName, drinkListDto.DrinkNameList);
+            return new UserInputModel
+            {
+                UserChoice = userInputDrinkName,
+                InputIsValid = inputIsADrink
+            };
+        }
+        public static async Task<UserInputModel> ShowCategoryMenuGetUserInputAsync()
+        {
+            bool exit = false;
+            var categoryList = await APIController.GetDrinkCategories();
+            var categoryMenu = MenuController.ConvertCategoryListToMenuModel(categoryList);
+            TableVisualisationEngine.ViewMenu(categoryMenu);
+            bool inputIsACategory = UserInput.TryGetUserChoice(out string userInputCategory, categoryMenu.MenuItems);
+            if (userInputCategory == "0")
+            {
+                exit = true;
+            }
+            return new UserInputModel
+            {
+                UserChoice = userInputCategory,
+                InputIsValid = inputIsACategory,
+                WantsExit = exit,
+            };
+        }
         public static MenuModel ConvertCategoryListToMenuModel(CategoryListModel categoryList)
         {
             List<List<object>> convertCategorieList = new List<List<object>>();

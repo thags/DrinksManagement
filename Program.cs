@@ -12,31 +12,20 @@ namespace DrinksManagement
             bool exit = false;
             do
             {
-                var categoryList = await APIController.GetDrinkCategories();
-                var categoryMenu = MenuController.ConvertCategoryListToMenuModel(categoryList);
-                TableVisualisationEngine.ViewMenu(categoryMenu);
-                bool inputIsACategory = UserInput.TryGetUserChoice(out string userInputCategory, categoryMenu.MenuItems);
-                if (userInputCategory == "0")
-                {
-                    exit = true;
-                    break;
-                }
+                UserInputModel catInputResults = await MenuController.ShowCategoryMenuGetUserInputAsync();
+                exit = catInputResults.WantsExit;
 
-                if (inputIsACategory)
+                if (catInputResults.InputIsValid)
                 {
-                    var drinksList = await APIController.GetDrinksByCategory(userInputCategory);
-                    var drinkListDto = MenuController.ConvertDrinkListToNamesMenu(drinksList);
-                    TableVisualisationEngine.ViewDrinksList(drinkListDto, userInputCategory.ToUpper());
-                    bool inputIsADrink = UserInput.TryGetUserChoice(out string userInputDrinkName, drinkListDto.DrinkNameList);
-                    if (inputIsADrink)
+                    UserInputModel drinkInputResults = await MenuController.ShowDrinksByCategoryMenuGetUserInputAsync(catInputResults.UserChoice);
+                    if (drinkInputResults.InputIsValid)
                     {
-                        var chosenDrink = await APIController.GetDrinkInfoByName(userInputDrinkName);
-                        var chosenDrinkDTO = MenuController.ConvertDrinkModelToDisplay(chosenDrink);
-                        TableVisualisationEngine.ViewDrinkInfo(chosenDrinkDTO);
+                        await MenuController.ShowDrinkInstructionsToUserAsync(drinkInputResults.UserChoice);
                         Console.WriteLine("Input any key to continue");
                         Console.ReadKey();
                     }
                 }
+
             } while (!exit);
 
 
