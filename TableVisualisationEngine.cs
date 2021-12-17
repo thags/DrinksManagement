@@ -11,10 +11,8 @@ namespace DrinksManagement
 {
     class TableVisualisationEngine
     {
-        public static void ViewMenu(MenuModel MenuToView)
+        public static void ViewMenu<T>(List<T> tableData, string title = "") where T : class
         {
-            var tableData = MenuToView.MenuItems;
-            string title = MenuToView.MenuTitle;
 
             if (tableData.Count == 0)
             {
@@ -22,7 +20,6 @@ namespace DrinksManagement
             }
             else
             {
-                Console.Clear();
                 ConsoleTableBuilder
                .From(tableData)
                .WithTitle(title)
@@ -32,50 +29,5 @@ namespace DrinksManagement
             Console.Write("\n");
         }
 
-        public static void ViewDrinksList(DrinkListDTO drinkList, string categoryName)
-        {
-            var tableData = drinkList.DrinkNameList;
-
-            if (tableData.Count == 0)
-            {
-                Console.WriteLine("Currently empty!");
-            }
-            else
-            {
-                Console.Clear();
-                ConsoleTableBuilder
-               .From(tableData)
-               .WithTitle(categoryName)
-               .WithFormat(ConsoleTableBuilderFormat.Alternative)
-               .ExportAndWriteLine(TableAligntment.Center);
-            }
-            Console.Write("\n");
-        }
-        public static void ViewDrinkInfo(DrinkInfoDTO drink)
-        {
-            var tableData = drink.DrinkIngredients;
-
-            if (tableData.Count == 0)
-            {
-                Console.WriteLine("Currently empty!");
-            }
-            else
-            {
-                Console.Clear();
-                ConsoleTableBuilder
-               .From(tableData)
-               .WithTitle(drink.DrinkName)
-               .WithColumn(new List<string> { "Ingredients", "Measurements" })
-               .WithFormat(ConsoleTableBuilderFormat.Alternative)
-               .ExportAndWriteLine(TableAligntment.Center);
-
-                ConsoleTableBuilder
-               .From(drink.Instructions)
-               .WithTitle("Instructions")
-               .WithFormat(ConsoleTableBuilderFormat.Alternative)
-               .ExportAndWriteLine(TableAligntment.Center);
-            }
-            Console.Write("\n");
-        }
     }
 }

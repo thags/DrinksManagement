@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DrinksManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,26 +9,23 @@ namespace DrinksManagement
 {
     public class UserInput
     {
-        public static bool CheckUserInputChoice(string userInput, List<List<object>> availableOptions, out string choice)
+        public static bool CheckUserInputChoice(string userInput, List<MenuItem> availableOptions, out string choice)
         {
             string unFormatUserInput = RipStringOfFormatting(userInput);
-            foreach (List<object> list in availableOptions)
+            foreach (MenuItem item in availableOptions)
             {
-                foreach (string option in list)
+                string unFormatOption = RipStringOfFormatting(item.Item);
+                if (unFormatOption == unFormatUserInput)
                 {
-                    string unFormatOption = RipStringOfFormatting(option);
-                    if (unFormatOption == unFormatUserInput)
-                    {
-                        choice = option;
-                        return true;
-                    }
+                    choice = item.Item;
+                    return true;
                 }
             }
             choice = "Invalid Input";
             return false;
         }
 
-        public static bool TryGetUserChoice(out string userInput, List<List<object>> availableOptions, int numAllowedAttempts = 5 )
+        public static bool TryGetUserChoice(out string userInput, List<MenuItem> availableOptions, int numAllowedAttempts = 5 )
         {
             int totalAttempts = 0;
             bool trueOptionChosen;

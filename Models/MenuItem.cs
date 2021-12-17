@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DrinksManagement.Models
 {
-    public class MenuModel
+    public class MenuItem
     {
-        public string MenuTitle { get; set; }
-        public List<MenuItem> MenuItems {get; set;}
+        public string Item { get; set; }
     }
 }

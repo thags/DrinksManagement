@@ -12,16 +12,17 @@ namespace DrinksManagement
     {
         public static async Task ShowDrinkInstructionsToUserAsync(string drinkName)
         {
-            var chosenDrink = await APIController.GetDrinkInfoByName(drinkName);
-            var chosenDrinkDTO = MenuController.ConvertDrinkModelToDisplay(chosenDrink);
-            TableVisualisationEngine.ViewDrinkInfo(chosenDrinkDTO);
+            DrinkModel chosenDrink = await APIController.GetDrinkInfoByName(drinkName);
+            DrinkInstructionDTO chosenDrinkInstuctions = ConvertDrinkModelToDisplay(chosenDrink);
+            TableVisualisationEngine.ViewMenu(chosenDrinkInstuctions.Ingredients, chosenDrinkInstuctions.DrinkName);
+            TableVisualisationEngine.ViewMenu(chosenDrinkInstuctions.Instructions, "Instructions");
         }
         public static async Task<UserInputModel> ShowDrinksByCategoryMenuGetUserInputAsync(string category)
         {
             var drinksList = await APIController.GetDrinksByCategory(category);
-            var drinkListDto = MenuController.ConvertDrinkListToNamesMenu(drinksList);
-            TableVisualisationEngine.ViewDrinksList(drinkListDto, category.ToUpper());
-            bool inputIsADrink = UserInput.TryGetUserChoice(out string userInputDrinkName, drinkListDto.DrinkNameList);
+            MenuModel drinkListMenu = ConvertDrinkListToNamesMenu(drinksList);
+            TableVisualisationEngine.ViewMenu(drinkListMenu.MenuItems, category.ToUpper());
+            bool inputIsADrink = UserInput.TryGetUserChoice(out string userInputDrinkName, drinkListMenu.MenuItems);
             return new UserInputModel
             {
                 UserChoice = userInputDrinkName,
@@ -32,8 +33,8 @@ namespace DrinksManagement
         {
             bool exit = false;
             var categoryList = await APIController.GetDrinkCategories();
-            var categoryMenu = MenuController.ConvertCategoryListToMenuModel(categoryList);
-            TableVisualisationEngine.ViewMenu(categoryMenu);
+            MenuModel categoryMenu = ConvertCategoryListToMenuModel(categoryList);
+            TableVisualisationEngine.ViewMenu(categoryMenu.MenuItems, categoryMenu.MenuTitle);
             bool inputIsACategory = UserInput.TryGetUserChoice(out string userInputCategory, categoryMenu.MenuItems);
             if (userInputCategory == "0")
             {
@@ -48,10 +49,10 @@ namespace DrinksManagement
         }
         public static MenuModel ConvertCategoryListToMenuModel(CategoryListModel categoryList)
         {
-            List<List<object>> convertCategorieList = new List<List<object>>();
+            List<MenuItem> convertCategorieList = new List<MenuItem>();
             foreach (CategoryItemModel category in categoryList.drinks)
             {
-                convertCategorieList.Add(new List<object> { category.strCategory });
+                convertCategorieList.Add(new MenuItem { Item = category.strCategory });
             }
             MenuModel categoriesMenu = new MenuModel
             {
@@ -61,49 +62,51 @@ namespace DrinksManagement
             return categoriesMenu;
         }
 
-        public static DrinkListDTO ConvertDrinkListToNamesMenu(DrinkListModel drinkList)
+        public static MenuModel ConvertDrinkListToNamesMenu(DrinkListModel drinkList)
         {
-            var justDrinkNamesList = new List<List<object>> ();
+            var justDrinkNamesList = new List<MenuItem> ();
             foreach(DrinkModel drink in drinkList.drinks)
             {
-                justDrinkNamesList.Add(new List<object> { drink.strDrink });
+                justDrinkNamesList.Add(new MenuItem { Item = drink.strDrink });
             }
-            DrinkListDTO drinkListMenu = new DrinkListDTO
+            MenuModel drinkListMenu = new MenuModel
             {
-                DrinkNameList = justDrinkNamesList
+                MenuTitle = "Drink List",
+                MenuItems = justDrinkNamesList
             };
 
             return drinkListMenu;
         }
 
-        public static DrinkInfoDTO ConvertDrinkModelToDisplay(DrinkModel drink)
+        public static DrinkInstructionDTO ConvertDrinkModelToDisplay(DrinkModel drink)
         {
-            var instructionsList = new List<List<object>>();
-            var allIngredientList = new List<List<object>>();
-            var allIngredientListBeforeNullCheck = new List<List<object>>
+            var instructionsList = new List<InstructionDTO>();
+            var allIngredientList = new List<IngredientDTO>();
+            var allIngredientListBeforeNullCheck = new List<IngredientDTO>
             {
-                new List<object> {drink.strIngredient1, drink.strMeasure1},
-                new List<object> {drink.strIngredient2, drink.strMeasure2},
-                new List<object> {drink.strIngredient3, drink.strMeasure3},
-                new List<object> {drink.strIngredient4, drink.strMeasure4},
-                new List<object> {drink.strIngredient5, drink.strMeasure5},
-                new List<object> {drink.strIngredient6, drink.strMeasure6},
-                new List<object> {drink.strIngredient7, drink.strMeasure7},
-                new List<object> {drink.strIngredient8, drink.strMeasure8},
-                new List<object> {drink.strIngredient9, drink.strMeasure9},
-                new List<object> {drink.strIngredient10, drink.strMeasure10},
-                new List<object> {drink.strIngredient11, drink.strMeasure11},
-                new List<object> {drink.strIngredient12, drink.strMeasure12},
-                new List<object> {drink.strIngredient13, drink.strMeasure13},
-                new List<object> {drink.strIngredient14, drink.strMeasure14},
-                new List<object> {drink.strIngredient15, drink.strMeasure15},
+                new IngredientDTO {Ingredient = "Ingredients", Measurement = "Measurements"},
+                new IngredientDTO {Ingredient =drink.strIngredient1, Measurement =drink.strMeasure1},
+                new IngredientDTO {Ingredient =drink.strIngredient2, Measurement =drink.strMeasure2},
+                new IngredientDTO {Ingredient =drink.strIngredient3, Measurement =drink.strMeasure3},
+                new IngredientDTO {Ingredient =drink.strIngredient4, Measurement =drink.strMeasure4},
+                new IngredientDTO {Ingredient =drink.strIngredient5, Measurement =drink.strMeasure5},
+                new IngredientDTO {Ingredient =drink.strIngredient6, Measurement =drink.strMeasure6},
+                new IngredientDTO {Ingredient =drink.strIngredient7, Measurement =drink.strMeasure7},
+                new IngredientDTO {Ingredient =drink.strIngredient8, Measurement =drink.strMeasure8},
+                new IngredientDTO {Ingredient =drink.strIngredient9, Measurement =drink.strMeasure9},
+                new IngredientDTO {Ingredient =drink.strIngredient10, Measurement =drink.strMeasure10},
+                new IngredientDTO {Ingredient =drink.strIngredient11, Measurement =drink.strMeasure11},
+                new IngredientDTO {Ingredient =drink.strIngredient12, Measurement =drink.strMeasure12},
+                new IngredientDTO {Ingredient =drink.strIngredient13, Measurement =drink.strMeasure13},
+                new IngredientDTO {Ingredient =drink.strIngredient14, Measurement =drink.strMeasure14},
+                new IngredientDTO {Ingredient =drink.strIngredient15, Measurement =drink.strMeasure15},
             };
        
-            foreach(List<object> pair in allIngredientListBeforeNullCheck)
+            foreach(IngredientDTO item in allIngredientListBeforeNullCheck)
             {
-                if(pair[1] != null && pair[0] != null)
+                if(item.Ingredient != null && item.Measurement != null)
                 {
-                    allIngredientList.Add(pair);
+                    allIngredientList.Add(item);
                 }
             }
 
@@ -112,13 +115,13 @@ namespace DrinksManagement
                 if (instruction.Length > 0)
                 {
                     string instructionToAdd = $"{instruction}.";
-                    instructionsList.Add(new List<object> { instructionToAdd });
+                    instructionsList.Add(new InstructionDTO { Instruction = instructionToAdd });
                 }
                 
             }
-            return new DrinkInfoDTO
+            return new DrinkInstructionDTO
             {
-                DrinkIngredients = allIngredientList,
+                Ingredients = allIngredientList,
                 DrinkName = drink.strDrink,
                 Instructions = instructionsList
             };
