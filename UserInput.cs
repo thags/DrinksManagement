@@ -1,9 +1,6 @@
 ﻿using DrinksManagement.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DrinksManagement
 {
@@ -25,7 +22,7 @@ namespace DrinksManagement
             return false;
         }
 
-        public static bool TryGetUserChoice(out string userInput, List<MenuItem> availableOptions, int numAllowedAttempts = 5 )
+        public static bool TryGetUserChoice(out string userInput, List<MenuItem> availableOptions, int numAllowedAttempts = 5)
         {
             int totalAttempts = 0;
             bool trueOptionChosen;
@@ -34,7 +31,7 @@ namespace DrinksManagement
                 Console.WriteLine("\nInput choice: ");
                 Console.WriteLine("0 to exit");
                 userInput = Console.ReadLine();
-                if (userInput == "0") 
+                if (userInput == "0")
                 {
                     return false;
                 }
@@ -44,7 +41,7 @@ namespace DrinksManagement
                     if (trueOptionChosen) { return true; };
                     totalAttempts++;
                 }
-            } while(totalAttempts < numAllowedAttempts && !trueOptionChosen);
+            } while (totalAttempts < numAllowedAttempts && !trueOptionChosen);
             return false;
         }
         private static string RipStringOfFormatting(string s)

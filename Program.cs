@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DrinksManagement.Models;
+using System;
 using System.Threading.Tasks;
-using DrinksManagement.Models;
 
 namespace DrinksManagement
 {

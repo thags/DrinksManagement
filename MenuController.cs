@@ -1,9 +1,6 @@
 ﻿using DrinksManagement.Models;
 using DrinksManagement.Models.DTO;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DrinksManagement
@@ -64,8 +61,8 @@ namespace DrinksManagement
 
         public static MenuModel ConvertDrinkListToNamesMenu(DrinkListModel drinkList)
         {
-            var justDrinkNamesList = new List<MenuItem> ();
-            foreach(DrinkModel drink in drinkList.drinks)
+            var justDrinkNamesList = new List<MenuItem>();
+            foreach (DrinkModel drink in drinkList.drinks)
             {
                 justDrinkNamesList.Add(new MenuItem { Item = drink.strDrink });
             }
@@ -101,23 +98,23 @@ namespace DrinksManagement
                 new IngredientDTO {Ingredient =drink.strIngredient14, Measurement =drink.strMeasure14},
                 new IngredientDTO {Ingredient =drink.strIngredient15, Measurement =drink.strMeasure15},
             };
-       
-            foreach(IngredientDTO item in allIngredientListBeforeNullCheck)
+
+            foreach (IngredientDTO item in allIngredientListBeforeNullCheck)
             {
-                if(item.Ingredient != null && item.Measurement != null)
+                if (item.Ingredient != null && item.Measurement != null)
                 {
                     allIngredientList.Add(item);
                 }
             }
 
-            foreach(string instruction in drink.strInstructions.Split(". "))
+            foreach (string instruction in drink.strInstructions.Split(". "))
             {
                 if (instruction.Length > 0)
                 {
                     string instructionToAdd = $"{instruction}.";
                     instructionsList.Add(new InstructionDTO { Instruction = instructionToAdd });
                 }
-                
+
             }
             return new DrinkInstructionDTO
             {

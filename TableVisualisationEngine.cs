@@ -1,11 +1,6 @@
-﻿using System;
+﻿using ConsoleTableExt;
+using System;
 using System.Collections.Generic;
-using ConsoleTableExt;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DrinksManagement.Models;
-using DrinksManagement.Models.DTO;
 
 namespace DrinksManagement
 {

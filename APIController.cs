@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DrinksManagement.Models;
+using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using DrinksManagement.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Configuration;
+using System.Threading.Tasks;
 
 namespace DrinksManagement
 {
