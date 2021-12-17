@@ -81,7 +81,6 @@ namespace DrinksManagement
             var allIngredientList = new List<IngredientDTO>();
             var allIngredientListBeforeNullCheck = new List<IngredientDTO>
             {
-                new IngredientDTO {Ingredient = "Ingredients", Measurement = "Measurements"},
                 new IngredientDTO {Ingredient =drink.strIngredient1, Measurement =drink.strMeasure1},
                 new IngredientDTO {Ingredient =drink.strIngredient2, Measurement =drink.strMeasure2},
                 new IngredientDTO {Ingredient =drink.strIngredient3, Measurement =drink.strMeasure3},

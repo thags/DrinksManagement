@@ -8,7 +8,6 @@ namespace DrinksManagement
     {
         public static void ViewMenu<T>(List<T> tableData, string title = "") where T : class
         {
-
             if (tableData.Count == 0)
             {
                 Console.WriteLine("Currently empty!");
