@@ -1,5 +1,5 @@
 # DrinksManagement
-A Drink Management Console Application
+A Drink Management Console Application. The purpose is to allow a user to select a drink and view the ingredients and instructions of a drink, all in the command line. 
 
 - [x] When application is opened the user should be presented with a drinks category menu
 - [x] User should be able to choose any category of drink with input
@@ -9,3 +9,7 @@ A Drink Management Console Application
 - [x] A new API call can be made with the chosen drink name
 - [x] From the new API call the user should now see a list of ingredients and measurements to make the drink
 
+## Things Learned
+-  Calling API's
+-  HTTP Requests
+-  Postman for testing
